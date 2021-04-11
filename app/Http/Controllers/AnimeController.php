@@ -24,7 +24,7 @@ class AnimeController{
 
     public function showPageAnimes($id){
 
-        //le controleur fait appel au modèle Anime avec pour paramètre id en utilisant ses fonctions => pageAnimes qui selectionne tous les champs de l'anime à l'id correspondant passé dans l'url; showReview qui selectionne l'username et sa critique depuis les tables user et review liées par une clé étrangère à l'id passé en url; showRate qui sélectionne la note moyenne donnée par les utilisateurs depis la table review à l'id passé en url
+        //le controleur fait appel au modèle Anime avec pour paramètre id en utilisant ses fonctions => pageAnimes qui selectionne tous les champs de l'anime à l'id correspondant passé dans l'url; showReview qui selectionne l'username et sa critique depuis les tables user et review liées par une clé étrangère à l'id passé en url; showRate qui sélectionne la note moyenne donnée par les utilisateurs depuis la table review à l'id passé en url
 
         $animes = new Anime();
         $anime = $animes->pageAnimes($id);
@@ -57,19 +57,26 @@ class AnimeController{
            
                 $animes->newAnimeReview($id);
          
+                    //il renvoie la vue : 
                     return redirect('/');}
+
           catch(QueryException $e) {
                  $error_code = $e->errorInfo[1];
                         if($error_code == 1062){
+                            //il renvoie la vue : 
                             return 'Vous avez déjà ajouté cet anime à votre watchlist';
                         }
                     }
     }
  
     public function showTopRank(){
+
         //fait appel au modèle Anime fonction listTopRank qui sélectionne en bdd les notes moyenne des users(moyenne faite en sql arrondie au premier chiffre après la virgule), les cover, titres et description des animes dans les tables review et animes jointes par une fk, toute cette sélection est groupée par id des animes et ordonée en descendant de la note la plus élevée à la pus basse
+
         $list = new Anime();
         $animes = $list->listTopRank();
+
+         //il renvoie la vue : 
         return view ('top', ['animes'=>$animes]);
     }
 
@@ -78,6 +85,8 @@ class AnimeController{
         //Ici le controlleur prend pour condition que si l'utilisateur ne s'est pas identifié, il ne peut pas créer de watchlist et est renvoyé sur la page de login; sinon lorsqu'il clic sur l'ajout à la watchlist on post un formulaire avec deux input cachés associés aux valeurs du titre et de la cover de l'anime dont l'id est en url, l'id de l'anime et l'id de l'user , ces input sont validés par la request, avec l'id de l'user et un id unique cover_id pour éviter qu'il n'ajoute deux fois le meme anime à sa watchlist; le tout est envoyé en bdd via le modèle anime fonction addToWatch et l'user est redirigé vers la page d'accueil
 
         if (!Auth::check()) {
+        
+          //il renvoie la vue : 
         return view('login');}
 
       else{    
@@ -97,6 +106,8 @@ class AnimeController{
 
         $animes->pageAnimes($id);
         $animes->addToWatch($id);
+        
+        //il renvoie la vue : 
         return redirect('/');
     }
     //ici le try catch nous permet de gérer les erreurs de type duplicate sql (l'user ne peut pas rentrer plus d'une fois le meme anime dans la table watch_list => ici on utilise la classe QueryException et ses méthodes de gestion des erreurs chemin en début de page, et on lui dit que si laravel nous renvoie une erreur de code 1062 (duplicate sql) alors on renvoie un message d'erreur à l'user;
@@ -104,6 +115,8 @@ class AnimeController{
     catch(QueryException $e) {
         $error_code = $e->errorInfo[1];
         if($error_code == 1062){
+          
+            //il renvoie la vue : 
             return 'Vous avez déjà ajouté cet anime à votre watchlist';
         }
     }
@@ -116,6 +129,8 @@ class AnimeController{
 
         $list = new Anime();
         $animes = $list->selectWatchList();
+        
+        //il renvoie la vue : 
         return view('watchlist', ['animes'=>$animes]);
     }
 
