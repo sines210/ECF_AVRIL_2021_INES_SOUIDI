@@ -9,9 +9,9 @@
         <img alt="" src="/covers/{{ $anime->cover }}" />
       </div>
       <h1>{{ $anime->title }}</h1>
-      <h2>Note membres : {{ $rate->rating }}</h2>
     </header>
     <p>{{ $anime->description }}</p>
+    <p>    <h2>Note membres :  {{ $rate->rating }}/10</h2> </p>
     <div>
       <div class="actions">
         <div>
@@ -31,7 +31,7 @@
       <div class="showReviews" style="border:2px dashed black;">
 
         <ul class="reviews">
-           <li><span>{{ $review->username }}:</span><span>{{ $review->comment }}</span></li>
+           <li><span><strong>{{ $review->username }} :</strong> </span><span>{{ $review->comment }}</span></li>
          </ul>
 
        </div>  

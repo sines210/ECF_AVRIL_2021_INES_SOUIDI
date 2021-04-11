@@ -14,23 +14,24 @@ class AnimeController{
 
     public function showAllAnimes(){
 
-        //le controleur fait appel au modèle :
+        //le controleur fait appel au modèle Anime avec pour fonction showAllAnimes qui séléctionne tous les champs des animes depuis la BDD
         $anime = new Anime();
         $animes = $anime->allAnimes();
 
-        //il renvoie la vue
+        //il renvoie la vue : 
         return view('welcome', ["animes" => $animes]);
     }
 
     public function showPageAnimes($id){
 
-        //le controleur fait appel au modèle :
+        //le controleur fait appel au modèle Anime avec pour paramètre id en utilisant ses fonctions => pageAnimes qui selectionne tous les champs de l'anime à l'id correspondant passé dans l'url; showReview qui selectionne l'username et sa critique depuis les tables user et review liées par une clé étrangère à l'id passé en url; showRate qui sélectionne la note moyenne donnée par les utilisateurs depis la table review à l'id passé en url
+
         $animes = new Anime();
         $anime = $animes->pageAnimes($id);
         $reviews = $animes-> showReview($id);
         $rate = $animes -> showRate($id);
         
-        //il renvoie la vue
+        //il renvoie la vue : 
         return view('anime', ["anime" => $anime, "reviews" => $reviews, "rate" => $rate]);
     }
 
@@ -38,11 +39,13 @@ class AnimeController{
   
     public function newReview(Request $request, $id) {
        
+        // le contrôleur valide les données passées dans les champs input (champs qui doivent obligatoirement être remplis + ajout du token @csrf pour être validés) et les assigne aux champs correspondants qui vont partir en bdd dans le modèle anime fonction newAnimeReview ainsi que l'id unique de la review; création d'une valeur unique pour chaque review d'utilisateur (champ unique en bdd) ce qui permet d'éviter qu'un utilisateur puisse écrire plusieurs review pour un meme anime (la valeur est composée de l'id de l'utilisateur et de l'id de l'anime le tout encapsulé dans des dollars); le tout est passé dans un try catch qui à pour condition d'erreur que si la review publiée revoie à une erreur de code 1062 (ou champ dupliqué), un message d'erreur sera affiché expliquant à l'utilisateur qu'il ne peut pas écrire plusieurs review pour un meme anime
+        //ce controleur à pour paramètre Request qui est une classe orientée objet laravel qui permet ici de valider les données des input et l'id de l'anime passé en url
+
         try{     
              $validatedComment = $request->validate(["comment" => "required"]);
             $validatedRate = $request->validate(["rating" => "required"]);   
             $aId = auth()->id();
-            //encodage avec $ pour une valeur unique
             $auth_id= "$" . $id . "$" . $aId;
 
             $animes = new Anime();
@@ -64,13 +67,15 @@ class AnimeController{
     }
  
     public function showTopRank(){
+        //fait appel au modèle Anime fonction listTopRank qui sélectionne en bdd les notes moyenne des users(moyenne faite en sql arrondie au premier chiffre après la virgule), les cover, titres et description des animes dans les tables review et animes jointes par une fk, toute cette sélection est groupée par id des animes et ordonée en descendant de la note la plus élevée à la pus basse
         $list = new Anime();
         $animes = $list->listTopRank();
-        // $listTop = $animes->listTopRank();
-            return view ('top', ['animes'=>$animes]);
+        return view ('top', ['animes'=>$animes]);
     }
 
     public function createWatchlist(Request $request, $id){
+
+        //Ici le controlleur prend pour condition que si l'utilisateur ne s'est pas identifié, il ne peut pas créer de watchlist et est renvoyé sur la page de login; sinon lorsqu'il clic sur l'ajout à la watchlist on post un formulaire avec deux input cachés associés aux valeurs du titre et de la cover de l'anime dont l'id est en url, l'id de l'anime et l'id de l'user , ces input sont validés par la request, avec l'id de l'user et un id unique cover_id pour éviter qu'il n'ajoute deux fois le meme anime à sa watchlist; le tout est envoyé en bdd via le modèle anime fonction addToWatch et l'user est redirigé vers la page d'accueil
 
         if (!Auth::check()) {
         return view('login');}
@@ -83,12 +88,12 @@ class AnimeController{
         $a = $request->input('watchlist_title');
         $c = $request->input('watchlist_cover');
         //création d'un champ unique correspondant à une string avec les 2 champs plus authenticate pour éviter les duplicate
-        $auth_id= $a. $c . $aId;
+        $cover_id= $a. $c . $aId;
 
         $animes = new Anime();
         $animes->watchlist_title = $validateTitle['watchlist_title'];
         $animes->watchlist_cover = $validateCover['watchlist_cover'];
-         $animes->auth_id = $auth_id;
+        $animes->cover_id = $cover_id;
 
         $animes->pageAnimes($id);
         $animes->addToWatch($id);
@@ -107,6 +112,8 @@ class AnimeController{
    
 
     public function showWatchList(){
+        // récupération des titres et cover des animes via le modèle anime fonction selectWatchList depuis la table watch_list où la fk user_watch_id correspond à l'id de l'user
+
         $list = new Anime();
         $animes = $list->selectWatchList();
         return view('watchlist', ['animes'=>$animes]);

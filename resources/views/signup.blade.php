@@ -10,7 +10,7 @@
 
         <div class="input-group">
           <label for="email">E-mail</label>   
-          <input id="email" name="email" value="{{ old('email') }}" required />
+          <input id="email" name="email" autocomplete="off"  value="{{ old('email') }}" required />
           @error('username')
             <p class="error">{{ $message }}</p>
           @enderror
@@ -18,7 +18,7 @@
 
         <div class="input-group">
           <label for="username">Nom d'utilisateur</label>
-          <input id="username" name="username" value="{{ old('username') }}" required />
+          <input id="username" name="username" autocomplete="off"  value="{{ old('username') }}" required />
           @error('username')
             <p class="error">{{ $message }}</p>
           @enderror

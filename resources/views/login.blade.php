@@ -9,7 +9,7 @@
         @csrf
         <div class="input-group">
           <label for="username">Nom d'utilisateur</label>
-          <input id="username" name="username" value="{{ old('username') }}" required />
+          <input id="username" autocomplete="off" name="username" value="{{ old('username') }}" required />
           @error('username')
             <p class="error">{{ $message }}</p>
           @enderror
