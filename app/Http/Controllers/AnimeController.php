@@ -91,17 +91,17 @@ class AnimeController{
 
       else{    
            try{
-        $validateTitle = $request->validate(['watchlist_title'=> 'required']);
-        $validateCover = $request->validate(['watchlist_cover'=> 'required']);
+        $validateTitle = $request->validate(['w_title'=> 'required']);
+        $validateCover = $request->validate(['w_cover'=> 'required']);
         $aId = auth()->id();
-        $a = $request->input('watchlist_title');
-        $c = $request->input('watchlist_cover');
+        $a = $request->input('w_title');
+        $c = $request->input('w_cover');
         //création d'un champ unique correspondant à une string avec les 2 champs plus authenticate pour éviter les duplicate
         $cover_id= $a. $c . $aId;
 
         $animes = new Anime();
-        $animes->watchlist_title = $validateTitle['watchlist_title'];
-        $animes->watchlist_cover = $validateCover['watchlist_cover'];
+        $animes->watchlist_title = $validateTitle['w_title'];
+        $animes->watchlist_cover = $validateCover['w_cover'];
         $animes->cover_id = $cover_id;
 
         $animes->pageAnimes($id);
