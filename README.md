@@ -1,78 +1,55 @@
-# Pré-requis
+#TACHES TECHNIQUES
 
-Pour pouvoir lancer le site, vous aurez besoin de:
+   Le code des MVC du site existant, des critiques, de la page des tops et de la watchlist est commenté sur la page de code du controlleur AnimeController 
+    
+   - VERIFICATTION EMAIL
+        - Implémentation du controlleur laravel mustVerifyEmail au modèle user;
+        - Création avec les migrations laravel des colonnes email (unique) et email_verified_at (timestamp référencant les dates et heures de la vérification des             emails par l'user);
+        - Utilisation du kit LaravelBreeze qui permet dans ce cas d'associer toutes les fonctionnalités de laravel liés à l'envoi d'email de vérification (écoute              d'évènement SendEmailVerificationNotification, vérification de la registration de l'user Illuminate\Auth\Events\Registered, controleur                           d'authentification App\Http\Controllers\Auth templates des mails, connexion à la boite mail de l'envoyeur via le fichier de config mail.php utilisant             les données de connexion présentes dans le fichier d'environnement, utilisation du template de vérification d'email laravel et des templates de layout           d'emails... le tout étant mis en relation via les routes crées dans le routeur
+        - Création des routes renvoyées après la registration sign-up  de l'utilisateur 
+            1° Route de renvoi vers la page de vérifcation de l'email du site avec lien de renvoi de l'email;
+            2° Route de gestion des requetes au clic sur le lien de vérification depuis l'email envoyé à l'user; il est renvoyé à la page d'accueil du site;
+            3° Route de revoi de l'email si l'email n'a pas été revoyé en premier lieu route déclenchée au clic sur le bouton de renvoi depuis page vérification ;
 
--   PHP cli >= 7.3
--   un serveur MySQL
--   [composer](https://getcomposer.org/download/)
--   toutes les [extensions PHP](https://laravel.com/docs/8.x/deployment#server-requirements) nécessaires au bon fonctionnement de Laravel
+        - Les emails sont automatiquement envoyés grace à l'interface mustVerifyEmail implémentée dans le modèle user
+        - Customisation de l'email envoyé et de la page de vérification Réécriture du texte
+        - Problèmes non résolus par manque de temps : Même si l'utilisateur n'a pas cliqué sur le lien de vérification de l'email, il est quand même loggé au site
+          s'il fait un retour en arrière depuis la page de vérification, ce problème vient peut-être du fait qu'au lieu de recréer toute la table des users j'ai                 ajouté les colonnes nécéssaires à l'envoi d'email avec une migration et n'ayant pas codé l'authentification je ne suis pas sure qu'elle soit                         prise en compte dans le la vérification avec le kit breeze ou alors il fallait re-restreidre l'accés au site après registration avec les                          protecting routes de laravel ou alors géré la redirection seulement aux users vérifiés depuis le gestionnaire d'évenement TRAVAIL EN COURS
+          
+      - PROBLÈME SÉCURITÉ
+        Je ne sais pas si c'est le problème de sécurité lié aux sessions mais lorsque un sign-up est fait avec un nom d'user numérique ou trop simple en lettres,         un message de violation des données et compromission du mp apparaît TRAVAIL EN COURS
+   
+   
+# COMPÉTENCES
 
-# Installation
+        1. MVC
+          Selon les requetes (get ou post dans notre cas) le routeur renvoie au controlleur; au lieu de faire un contrôlleur et un modèle pour chaque route j'ai             créé un controlleur globale (AnimeController) contenant tous les controlleur pour chaque action et un modèle globale (Anime) contenant tous les modèles            une fonction pour chaque requete sql; ainsi depuis chaque route le controlleur AnimeController associé à la fonction que l'on veut utilisé (le mini-              controller) est appelé ; le mini-controlleur détient les fonctions, conditions et variables qu'ils intègre au modèle anime utilise le modèle-anime                get ou post sur la bdd; la vue est renvoyée à la fin de l'éxécution de chaque controlleur;
+          Le modèle crée un modèle type des données que l'on va vouloir envoyer ou recevoir en bdd, le controlleur gère toutes les actions de traitement de ces             données et renvoie à la vue désirée.
+          
+        2° PHP/LARAVEL/SQL
+           Laravel offre tout un environnement de travail pour coder en php, c'est de la programmation orientée objet ->on créé des objets, des classes                      que l'on réutilise tout au long du développement du projet avec entre autre l'utilsation des namespace qui permettent de définir des classes d'éléments            et de nommer chaque élément associé à cette classe pour les réutiliser de manière simple n'importe où dans le projet avec les  use 
+           Laravel offre aussi une architecture structurée basée sur le MVC qui permet de gérer des projet de toute ampleur
+           Laravel offre aussi toute une librairie de code prééxistant qui peu être très utile (ici c'était pour la vérification d'emails et l'authentification)              c'est grace à la verif d'email que j'ai pu me familiariser avec une partie de toutes les ramifications présentes dans l'architecture Laravel et les                possibilités sont assez énormes avec aussi la possibilité d'utilisation de kit en nodeJS; il faut du temps pour prendre en main, comprendre la                    documentation et toutes les ramifications;
+           Laravel offre aussi la possibilité d'utiliser l'ORM eloquent 
+           Pour mes requetes SQL j'ai utilisé le query builder facades plutôt qu'eloquent car je n'arrivais pas trop à comprendre le principe de l'ORM mais j'ai              commencé à utiliser eloquent dans les migrations 
+           Laravel offre aussi le systeme de templating php blade qui simplifie beaucoup le code des views, le blade est compilé en PHP et il n'interdit pas de              coder en PHP classique dans la view
+           
+           En résumé Laravel est un environnement de développement super complet avec une architecture bien construite où il est facile de s'y retrouver un ORM              eloquent pour interagir avec la bdd, une librairie pas trop complexe à réutiliser et beaucoup de possibilités
+           
+           
+           TABLES SQL
+            ci-joint MCD/MLD
+            4 tables, création des foreign keys, apprentissage des migrations laravel
+           
+           SÉCURITÉ
+           //INJECTION SQL ET FAILLES XSS
+           Laravel prémunit des injections sql et des failles XSS avec sa méthode Request->validate de validation des données avant envoi en bdd: l'utilisateur              peut en effet insérer du code JavaScript dans les chaps input (faille xss) ou des injections sql; il faut donc modifier les données avant de les                  envoyer en bdd pour qu'un utilisateur malveillant ne puisse pas y rentrer du code qui sera éxécuté en php plain on utilise les htmlentities ou special            chars et avec laravel c'est la validation avec la méthode Request;
+            //CSRF
+            Les attaques csrf sont des attaques des users malveillants qui injectent du code dans les requetes des utilisateurs ils rentrent dans les requetes des             utilisateurs et peuvent après redirigés vers les actions de leurs choix; en php plain il vaut donc mieux éviter de faire envoyer des données par                   l'user avec la méthode get (on utilise post et validation de données) Laravel utilise des token chiffré (@csrf dans blade quand on poste des données)             chiffré de manière unique pour chaque session utilisateur : ainsi seul l'utilisateur peut faire des requetes
 
-## Installation des dépendances
+           
 
-Pour installer les dépendances du projet, vous devrez utiliser composer :
-
-```
-composer install
-```
-
-## Création de la base de données
-
-Pour faire tourner le projet, vous devrez créer une nouvelle base de données sur
-votre serveur MySQL (avec PhpMyAdmin ou bien en ligne de commande).
-
-## Configuration de la base de données
-
-Une fois les dépendances installées, vous devrez copier le fichier
-`.env.example` en `/env`
-
-```
-cp .env.example .env
-```
-
-Vous devrez ensuite modifier les informations de connexion à la base de données
-contenues dans ce fichier, en fonction du nom que vous aurez donné à votre base
-de donnée, et de votre environnement (port, username, mot de passe)
-
-```
-DB_PORT=???
-DB_DATABASE=???
-DB_USERNAME=???
-DB_PASSWORD=???
-```
-
-### Migrations
-
-Une fois vos informations de connexion renseignées, vous devrez créer toutes les
-tables du projet. Pour faciliter cette tâche, Laravel utilise un système de
-[migrations](https://laravel.com/docs/8.x/migrations) qui automatisent ce
-processus.
-
-Pour lancer les migrations, exécutez la commande suivante :
-
-```
-php artisan migrate
-```
-
-### Seeds
-
-Pour pré-remplir la BDD avec des données prédéfinies, le projet utilise les
-[seeds](https://laravel.com/docs/8.x/seeding) de Laravel. Pour exécuter les
-"seeds", lancez la commande suivante :
-
-```
-php artisan db:seed
-```
-
-## Génération de la clé de chiffrement
-
-Vous pouvez maintenant lancer le serveur de développement en ligne de commande
-
-```
-php artisan serve
-```
-
-Lorsque vos accéderez au site, vous verrez une erreur Laravel, avec un bouton
-qui vous suggère de créer une clé. Cliquez sur ce bouton pour générer la clé,
-puis relancer votre serveur de développement.
+          
+    
+       
+           
