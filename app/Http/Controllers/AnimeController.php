@@ -64,7 +64,7 @@ class AnimeController{
                  $error_code = $e->errorInfo[1];
                         if($error_code == 1062){
                             //il renvoie la vue : 
-                            return 'Vous avez déjà ajouté cet anime à votre watchlist';
+                            return 'Vous avez déjà ajouté déjà écrit une review pour cet anime';
                         }
                     }
     }
