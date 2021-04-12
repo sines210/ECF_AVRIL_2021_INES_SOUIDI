@@ -36,7 +36,7 @@ public $cover_id;
     }
 
     public function showRate($id){
-       return DB::select("SELECT ROUND(AVG(rating), 1) AS rating FROM review WHERE anime_id = ?", [$id])[0];
+       return DB::select("SELECT ROUND(AVG(rating), 1) AS rating FROM review WHERE anime_id = $id");
     }
 
     public function addToWatch($id){
