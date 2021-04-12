@@ -18,9 +18,9 @@ class CreateWatchListTable extends Migration
             $table->string('watchlist_title');
             $table->string('watchlist_cover');
             $table->string('cover_id')->unique();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_watch_id');
             $table->foreign('user_watch_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
-            $table->unsignedBigInteger('anime_id');
+            $table->unsignedBigInteger('anime_watch_id');
             $table->foreign('anime_watch_id')->references('id')->on('animes')->onUpdate('cascade')->onDelete('restrict');
         });
     }
