@@ -32,7 +32,7 @@ public $cover_id;
     }
 
     public function listTopRank (){
-        return DB::select("SELECT ROUND(AVG(rating), 1) AS rating,  animes.id, animes.title, animes.description, animes.cover FROM review JOIN animes ON review.anime_id=animes.id  GROUP BY animes.id ORDER BY ROUND(AVG(rating), 1) DESC");
+        return DB::select("SELECT ROUND(AVG(rating), 1) AS rating,  animes.id, animes.title, animes.description, animes.cover FROM review LEFT JOIN animes ON review.anime_id=animes.id  GROUP BY animes.id, animes.title, animes.description, animes.cover ORDER BY ROUND(AVG(rating), 1) DESC");
     }
 
     public function showRate($id){
