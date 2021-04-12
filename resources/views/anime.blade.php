@@ -12,7 +12,7 @@
     </header>
     <p>{{ $anime->description }}</p>
     @foreach ($rate as $r)
-    <p>    <h2>Note membres :  {{ $r->rating[0] }}/10</h2> </p>
+    <p>    <h2>Note membres :  {{ $r->rating }}/10</h2> </p>
     @endforeach
     <div>
       <div class="actions">
