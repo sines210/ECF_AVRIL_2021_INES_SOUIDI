@@ -1,3 +1,8 @@
+
+#PROBLEME DE DEPLOIEMENT 
+ Le code a du être un peu modifié pour que le site fonctionne sur Heroku au niveau du passage à clear db, reconstruction de toutes les tables en migration,           probleme de group by sql sur la watchlist. Tous les problèmes ont été résolus ormis un problème sur l'email de vérification car le template de laravel que         j'avais remanié n'est pas pris en compte par heroku, c'est donc l'email avec le texte de laravel qui est envoyé à l'user ; travail en cours
+
+
 #TACHES TECHNIQUES
 
    Le code des MVC du site existant, des critiques, de la page des tops et de la watchlist est commenté sur la page de code du controlleur AnimeController 
