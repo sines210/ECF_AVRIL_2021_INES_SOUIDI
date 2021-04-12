@@ -22,11 +22,11 @@
    
 # COMPÉTENCES
 
-        1. MVC
+        - MVC
           Selon les requetes (get ou post dans notre cas) le routeur renvoie au controlleur; au lieu de faire un contrôlleur et un modèle pour chaque route j'ai             créé un controlleur globale (AnimeController) contenant tous les controlleur pour chaque action et un modèle globale (Anime) contenant tous les modèles            une fonction pour chaque requete sql; ainsi depuis chaque route le controlleur AnimeController associé à la fonction que l'on veut utilisé (le mini-              controller) est appelé ; le mini-controlleur détient les fonctions, conditions et variables qu'ils intègre au modèle anime utilise le modèle-anime                get ou post sur la bdd; la vue est renvoyée à la fin de l'éxécution de chaque controlleur;
           Le modèle crée un modèle type des données que l'on va vouloir envoyer ou recevoir en bdd, le controlleur gère toutes les actions de traitement de ces             données et renvoie à la vue désirée.
           
-        2° PHP/LARAVEL/SQL
+        - PHP/LARAVEL/SQL
            Laravel offre tout un environnement de travail pour coder en php, c'est de la programmation orientée objet ->on créé des objets, des classes                      que l'on réutilise tout au long du développement du projet avec entre autre l'utilsation des namespace qui permettent de définir des classes d'éléments            et de nommer chaque élément associé à cette classe pour les réutiliser de manière simple n'importe où dans le projet avec les  use 
            Laravel offre aussi une architecture structurée basée sur le MVC qui permet de gérer des projet de toute ampleur
            Laravel offre aussi toute une librairie de code prééxistant qui peu être très utile (ici c'était pour la vérification d'emails et l'authentification)              c'est grace à la verif d'email que j'ai pu me familiariser avec une partie de toutes les ramifications présentes dans l'architecture Laravel et les                possibilités sont assez énormes avec aussi la possibilité d'utilisation de kit en nodeJS; il faut du temps pour prendre en main, comprendre la                    documentation et toutes les ramifications;
