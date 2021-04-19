@@ -6,10 +6,10 @@
 
     <article class="watch_list">
     
-        <div class="w_list">
+        <div class="anime--header">
         
         @foreach($animes as $anime)
-        <span style="margin-right: 5%;">
+        <span >
             <strong style="margin: 3%;"> {{$anime->w_title}}</strong>
                <img alt="" style="width:15vw; height:20vh; margin: 2% 5%" src="/covers/{{$anime->w_cover}}" />
         </span>
