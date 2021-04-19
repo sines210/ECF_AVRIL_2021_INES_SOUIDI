@@ -39,4 +39,13 @@ public $cover_id;
        return DB::select("SELECT ROUND(AVG(rating), 1) AS rating FROM review WHERE anime_id = ?", [$id]);
     }
 
+    public function addToWatch($id){
+        DB::insert("INSERT INTO w_l (watchlist_title, watchlist_cover, auth_id,  user_watch_id, anime_watch_id) VALUES (:watchlist_title, :watchlist_cover, :auth_id, :user_watch_id, :anime_watch_id)", ["watchlist_title" => $this->watchlist_title, "user_watch_id" => auth()->id(), "anime_watch_id" => $id,
+        "watchlist_cover" => $this->watchlist_cover, "auth_id" => $this->auth_id]);  }
+
+    public function selectWatchList(){
+        
+        return DB::select("SELECT watchlist_title, watchlist_cover, user_watch_id FROM  w_l WHERE user_watch_id = :username ", [":username" => auth()->id()]
+         );}
+
 }
