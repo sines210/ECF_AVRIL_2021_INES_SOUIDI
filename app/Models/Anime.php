@@ -40,7 +40,7 @@ public $cover_id;
     }
 
     public function addToWatch($id){
-        DB::insert("INSERT INTO w_l (w_title, w_cover, auth_id,  user_w_id, anime_w_id, cov_id) VALUES (:w_title, :w_cover, :auth_id, :user_w_id, :anime_w_id, :cov_id)", ["w_title" => $this->watchlist_title, "user_w_id" => auth()->id(), "anime_w_id" => $id,
+        DB::insert("INSERT INTO w_l (w_title, w_cover, user_w_id, anime_w_id, cov_id) VALUES (:w_title, :w_cover, :user_w_id, :anime_w_id, :cov_id)", ["w_title" => $this->watchlist_title, "user_w_id" => auth()->id(), "anime_w_id" => $id,
         "w_cover" => $this->watchlist_cover, "cov_id" => $this->cover_id]);  }
 
     public function selectWatchList(){
