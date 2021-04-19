@@ -48,4 +48,9 @@ public $cover_id;
         return DB::select("SELECT w_title, w_cover, user_w_id FROM  w_l WHERE user_w_id = :username ", [":username" => auth()->id()]
          );}
 
+    public function removeFromWatchList($id){
+        return DB::delete("DELETE FROM w_list where id = ?", [$id]);
+    }
+
+
 }

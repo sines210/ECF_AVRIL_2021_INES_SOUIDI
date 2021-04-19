@@ -34,6 +34,7 @@ Route::post('/anime/{id}/create_review', [AnimeController::class, 'newReview' ])
 Route::get('/top', [AnimeController::class, 'showTopRank']);
 Route::post('/anime/{id}/add_to_watch_list', [AnimeController::class, 'createWatchlist']);
 Route::get('/watchlist', [AnimeController::class, 'showWatchList']);
+Route::post('/deleteWatchAnime', [AnimeController::class, 'deleteAnime']);
 
 
 Route::get('/login', function () {

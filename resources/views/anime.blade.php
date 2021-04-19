@@ -24,7 +24,7 @@
         <input type="hidden" name="w_cover" value="{{ $anime->cover}}"/>
         @csrf
           <button class="cta">Ajouter à ma watchlist</button>
-        </form>  
+        </form>
       </div>
     </div>
     @foreach ($reviews as $review)
