@@ -125,6 +125,14 @@ class AnimeController{
    
 
     public function showWatchList(){
+        
+          //Ici le controlleur prend pour condition que si l'utilisateur ne s'est pas identifié, il ne peut pas créer de watchlist et est renvoyé sur la page de login; sinon lorsqu'il clic sur l'ajout à la watchlist on post un formulaire avec deux input cachés associés aux valeurs du titre et de la cover de l'anime dont l'id est en url, l'id de l'anime et l'id de l'user , ces input sont validés par la request, avec l'id de l'user et un id unique cover_id pour éviter qu'il n'ajoute deux fois le meme anime à sa watchlist; le tout est envoyé en bdd via le modèle anime fonction addToWatch et l'user est redirigé vers la page d'accueil
+
+          if (!Auth::check()) {
+        
+            //il renvoie la vue : 
+          return view('login');}
+
         // récupération des titres et cover des animes via le modèle anime fonction selectWatchList depuis la table watch_list où la fk user_watch_id correspond à l'id de l'user
 
         $list = new Anime();
