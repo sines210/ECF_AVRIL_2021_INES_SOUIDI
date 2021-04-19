@@ -134,11 +134,11 @@ class AnimeController{
         return view('watchlist', ['animes'=>$animes]);
     }
 
-    public function deleteAnime(Request $request, $id){
+    public function deleteAnime(Request $request){
         $validateId = $request->validate(['w_list_anime_id'=> 'w_list_anime_id']);
         $animes = new Anime();
-        $animes->id = $validateId['w_list_anime_id'];
-        $animes-> removeFromWatchList($id);
+        $animes->cover_id = $validateId['w_list_anime_id'];
+        $animes-> removeFromWatchList();
 
         return view('watchlist', ['animes'=>$animes]);
 
