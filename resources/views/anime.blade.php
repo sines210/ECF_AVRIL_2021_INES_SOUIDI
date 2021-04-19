@@ -33,7 +33,7 @@
       <div class="showReviews" style="border:2px dashed black;">
 
         <ul class="reviews">
-           <li><span><strong>{{ $review->username }} :</strong> </span><span>{{ $review->comment }}</span></li>
+           <li style="list-style-type: none;"><span><strong>{{ $review->username }} :</strong> </span><span>{{ $review->comment }}</span></li>
          </ul>
 
        </div>  
