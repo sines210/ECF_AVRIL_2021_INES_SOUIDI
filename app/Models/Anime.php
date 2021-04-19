@@ -45,7 +45,7 @@ public $cover_id;
 
     public function selectWatchList(){
         
-        return DB::select("SELECT w_title, w_cover, user_w_id FROM  w_l WHERE user_w_id = :username ", [":username" => auth()->id()]
+        return DB::select("SELECT w_title, w_cover, user_w_id, cov_id FROM  w_l WHERE user_w_id = :username ", [":username" => auth()->id()]
          );}
 
     public function removeFromWatchList(){
