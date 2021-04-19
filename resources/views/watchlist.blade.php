@@ -17,7 +17,7 @@
           <li class="deleteWatchAnime">
              <form action="deleteFromWatchList" method="POST">
                 <input type="hidden" name="w_list_anime_id" value="{{$anime->cov_id}}"/>
-                <button type="submit" value="supprimer"></button>
+                <button type="submit" value="supprimer">Supprimer</button>
                 @csrf
              </form>
           </li>
