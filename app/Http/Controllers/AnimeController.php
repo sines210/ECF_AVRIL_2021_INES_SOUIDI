@@ -140,7 +140,7 @@ class AnimeController{
         $animes->cover_id = $validateId['watchListId'];
         $animes-> removeFromWatchList();
 
-        return view('watchlist', ['animes'=>$animes]);
+        return redirect('/');
 
     }
 
