@@ -49,7 +49,7 @@ public $cover_id;
          );}
 
     public function removeFromWatchList(){
-        return DB::delete("DELETE FROM w_list where cov_id = :cov_id" , [":cov_id" => $this->cover_id]);
+        return DB::delete("DELETE FROM w_l where cov_id = :cov_id" , [":cov_id" => $this->cover_id]);
     }
 
 
