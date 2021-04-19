@@ -16,7 +16,7 @@
                    <img alt="" style="width:15vw; height:20vh; margin: 2% 5%" src="/covers/{{$anime->w_cover}}" />
                 </li>
             </span>
-            <span>
+            <span style="margin-left: 8%;">
                  <li class="deleteWatchAnime" style="list-style-type: none;">
                      <form action="deleteFromWatchList" method="POST">
                           <input type="hidden" name="watchListId" value="{{$anime->cov_id}}"/>
